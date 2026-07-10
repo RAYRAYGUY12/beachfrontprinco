@@ -18,8 +18,9 @@ site shows an on-page "not connected yet" note instead of a broken link.
 
 ### 1. Stripe Payment Link (towel checkout)
 
-1. In your Stripe Dashboard, create a **Payment Link** for the Give-Back Towel ($32),
-   with adjustable quantity if you want customers to buy more than one.
+1. In your Stripe Dashboard, create a **Payment Link** for the Give-Back Towel ($35).
+   Each run is only 50 towels, so consider using Stripe's "limit the number of
+   payments" option on the link to auto-close checkout once that run sells out.
 2. Copy the payment link URL.
 3. In `index.html`, find the `Buy Now` button (`id="buyTowelBtn"`) and replace
    `data-stripe-link="REPLACE_WITH_STRIPE_PAYMENT_LINK"` with your real URL.
