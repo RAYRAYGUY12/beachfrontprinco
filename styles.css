@@ -110,10 +110,11 @@ h1, h2, h3 {
   margin: 0 0 var(--space-4);
   color: var(--color-ink);
   letter-spacing: -0.01em;
+  text-wrap: balance;
 }
 h2 { font-size: var(--fs-h2); }
 h3 { font-size: var(--fs-h3); }
-p { margin: 0 0 var(--space-4); }
+p { margin: 0 0 var(--space-4); text-wrap: pretty; }
 
 :focus-visible {
   outline: 3px solid var(--color-focus);
@@ -247,9 +248,11 @@ p { margin: 0 0 var(--space-4); }
 .scroll-progress span {
   display: block;
   height: 100%;
-  width: 0%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
   background: var(--color-accent);
-  transition: width 80ms linear;
+  transition: transform 80ms linear;
 }
 
 /* ==========================================================================
@@ -316,12 +319,14 @@ p { margin: 0 0 var(--space-4); }
   content: "";
   position: absolute;
   left: 0; bottom: -2px;
-  width: 0%;
+  width: 100%;
   height: 2px;
   background: var(--color-accent);
-  transition: width var(--dur-base) var(--ease-out);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-base) var(--ease-out);
 }
-.primary-nav a:hover::after { width: 100%; }
+.primary-nav a:hover::after { transform: scaleX(1); }
 
 .header-actions { display: flex; align-items: center; gap: var(--space-4); }
 .header-actions .btn { display: none; }

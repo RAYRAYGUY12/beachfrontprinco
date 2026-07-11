@@ -17,7 +17,7 @@
     if (progressBar) {
       var docHeight = document.documentElement.scrollHeight - window.innerHeight;
       var pct = docHeight > 0 ? (y / docHeight) * 100 : 0;
-      progressBar.style.width = Math.min(100, Math.max(0, pct)) + "%";
+      progressBar.style.transform = "scaleX(" + (Math.min(100, Math.max(0, pct)) / 100) + ")";
     }
   }
   document.addEventListener("scroll", onScroll, { passive: true });
