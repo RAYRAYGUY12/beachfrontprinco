@@ -77,13 +77,38 @@
 
     var lines = document.querySelectorAll(".reveal-line span");
     gsap.set(lines, { yPercent: prefersReducedMotion ? 0 : 110, opacity: prefersReducedMotion ? 1 : 0 });
-    gsap.to(lines, {
+
+    var heroLines = [], sectionLines = [];
+    lines.forEach(function (el) {
+      (el.closest(".hero-title") ? heroLines : sectionLines).push(el);
+    });
+
+    /* Hero lines are already in view on load, so they play immediately. */
+    gsap.to(heroLines, {
       yPercent: 0,
       opacity: 1,
       duration: 0.9,
       ease: "power4.out",
       stagger: 0.12,
       delay: 0.15
+    });
+
+    /* Section headings are below the fold — scroll-trigger them like the
+       rest of the section content instead of animating on page load,
+       otherwise they'd finish before the user ever scrolls to see them. */
+    sectionLines.forEach(function (el, i) {
+      gsap.to(el, {
+        yPercent: 0,
+        opacity: 1,
+        duration: 0.9,
+        ease: "power4.out",
+        delay: prefersReducedMotion ? 0 : (i % 2) * 0.1,
+        scrollTrigger: {
+          trigger: el,
+          start: "top 88%",
+          toggleActions: "play none none none"
+        }
+      });
     });
   }
 
@@ -682,6 +707,12 @@
         { threshold: 0.35 }
       );
       towelIO.observe(towelSection);
+    }
+
+    var productArt = document.querySelector(".product-art");
+    if (productArt) {
+      productArt.addEventListener("mouseenter", function () { cursorGlow.classList.add("is-shop"); });
+      productArt.addEventListener("mouseleave", function () { cursorGlow.classList.remove("is-shop"); });
     }
   }
 

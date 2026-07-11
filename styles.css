@@ -539,7 +539,7 @@ p { margin: 0 0 var(--space-4); }
   color: var(--color-on-navy);
   text-shadow: 0 4px 28px rgba(9, 13, 15, 0.75), 0 1px 4px rgba(9, 13, 15, 0.9);
 }
-.reveal-line { display: block; overflow: hidden; }
+.reveal-line { display: block; overflow: hidden; padding-bottom: 0.15em; }
 .reveal-line span { display: block; }
 
 .hero-sub {
@@ -999,6 +999,29 @@ p { margin: 0 0 var(--space-4); }
   border-color: rgba(179, 82, 76, 0.45);
   background: rgba(179, 82, 76, 0.08);
 }
+
+.cursor-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%) scale(0.7);
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 280ms var(--ease-out), transform 280ms var(--ease-out);
+}
+.cursor-glow.is-shop .cursor-halo {
+  transform: translate(-50%, -50%) scale(2.6);
+  border-color: rgba(31, 75, 72, 0.35);
+  background: rgba(31, 75, 72, 0.9);
+}
+.cursor-glow.is-shop .cursor-label { opacity: 1; transform: translate(-50%, -50%) scale(1); color: var(--color-on-navy); }
+.cursor-glow.is-shop .cursor-icon--wave { opacity: 0; }
 
 @media (pointer: coarse), (hover: none) {
   .cursor-glow { display: none; }
