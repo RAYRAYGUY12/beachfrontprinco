@@ -141,6 +141,8 @@ p { margin: 0 0 var(--space-4); text-wrap: pretty; }
   padding: 0 var(--space-5);
 }
 
+section[id] { scroll-margin-top: var(--header-h); }
+
 .eyebrow {
   font-family: var(--font-sans);
   font-size: var(--fs-eyebrow);
@@ -391,33 +393,13 @@ p { margin: 0 0 var(--space-4); text-wrap: pretty; }
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   padding: calc(var(--header-h) + var(--space-8)) var(--space-5) var(--space-8);
   overflow: hidden;
   background: linear-gradient(180deg, #101a17 0%, #16231f 55%, #1f4b48 130%);
   color: var(--color-on-navy);
-  text-align: center;
-}
-
-/* On tall narrow phones, 100dvh forces the "slice" background art to zoom
-   in aggressively (a much taller box relative to its width than the art's
-   own 1440x800 proportions), leaving only a narrow central sliver of the
-   bay scene visible. Capping the height here is a deliberate mobile
-   composition choice, not just a shrunk desktop box — it shows meaningfully
-   more of the bridge and lets the scene breathe instead of reading as an
-   arbitrary crop. */
-@media (max-width: 640px) {
-  .hero {
-    min-height: 78dvh;
-    padding-top: calc(var(--header-h) + var(--space-5));
-    padding-bottom: var(--space-5);
-  }
-  .hero-inner { padding: var(--space-5) var(--space-4); }
-  .hero-title { margin-bottom: var(--space-3); }
-  .hero-sub { margin-bottom: var(--space-4); }
-  .hero-actions { gap: var(--space-3); }
-  .eyebrow.eyebrow--dark { margin-bottom: var(--space-3); }
+  text-align: left;
 }
 
 .hero-bg { position: absolute; inset: 0; opacity: 0.62; }
@@ -525,17 +507,15 @@ p { margin: 0 0 var(--space-4); text-wrap: pretty; }
   inset: 0;
   z-index: 3;
   pointer-events: none;
-  background: radial-gradient(ellipse 68% 64% at 50% 50%, rgba(9, 13, 15, 0.78) 0%, rgba(9, 13, 15, 0.4) 50%, transparent 80%);
+  background: linear-gradient(100deg, rgba(9, 13, 15, 0.8) 0%, rgba(9, 13, 15, 0.55) 32%, rgba(9, 13, 15, 0.18) 56%, transparent 74%),
+              linear-gradient(0deg, rgba(9, 13, 15, 0.55) 0%, transparent 40%);
 }
 
 .hero-inner {
   position: relative;
   z-index: 4;
-  max-width: 780px;
-  padding: var(--space-7) var(--space-6);
-  border-radius: var(--radius-lg);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  max-width: 560px;
+  margin-left: clamp(0px, 4vw, 64px);
 }
 
 .hero-title {
@@ -550,16 +530,14 @@ p { margin: 0 0 var(--space-4); text-wrap: pretty; }
 .hero-sub {
   font-size: var(--fs-lead);
   color: var(--color-on-navy-soft);
-  max-width: 560px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 480px;
   text-shadow: 0 2px 18px rgba(9, 13, 15, 0.9), 0 1px 3px rgba(9, 13, 15, 0.95);
 }
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: var(--space-4);
   margin-top: var(--space-6);
 }
@@ -590,6 +568,29 @@ p { margin: 0 0 var(--space-4); text-wrap: pretty; }
 @keyframes cue-pulse {
   0%, 100% { opacity: 0.3; transform: scaleY(0.7); transform-origin: top; }
   50% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+}
+
+/* On tall narrow phones, 100dvh forces the "slice" background art to zoom
+   in aggressively (a much taller box relative to its width than the art's
+   own 1440x800 proportions), leaving only a narrow central sliver of the
+   bay scene visible. Capping the height here is a deliberate mobile
+   composition choice, not just a shrunk desktop box — it shows meaningfully
+   more of the bridge and lets the scene breathe instead of reading as an
+   arbitrary crop. Placed after the base hero rules (not right after
+   .hero{}) so these overrides actually win the cascade instead of being
+   defeated by same-specificity base rules declared later in the file. */
+@media (max-width: 640px) {
+  .hero {
+    min-height: 78dvh;
+    padding-top: calc(var(--header-h) + var(--space-5));
+    padding-bottom: var(--space-5);
+  }
+  .hero-inner { margin-left: 0; max-width: 82%; }
+  .hero-title { margin-bottom: var(--space-3); }
+  .hero-sub { margin-bottom: var(--space-4); }
+  .hero-actions { gap: var(--space-3); }
+  .eyebrow.eyebrow--dark { margin-bottom: var(--space-3); }
+  .scroll-cue { display: none; }
 }
 
 /* ==========================================================================
