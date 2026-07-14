@@ -629,6 +629,22 @@
     el.style.display = "none";
   });
 
+  /* ------------------------------------------------------------------ */
+  /* mailto links: also copy the address, since a mailto: click does     */
+  /* nothing visible on a device with no default mail client set up.     */
+  /* ------------------------------------------------------------------ */
+  document.querySelectorAll('a[href^="mailto:"]').forEach(function (link) {
+    link.addEventListener("click", function () {
+      var address = link.getAttribute("href").replace("mailto:", "").split("?")[0];
+      if (!navigator.clipboard) return;
+      navigator.clipboard.writeText(address).then(function () {
+        var original = link.textContent;
+        link.textContent = "Copied " + address;
+        setTimeout(function () { link.textContent = original; }, 1800);
+      }).catch(function () {});
+    });
+  });
+
   var buyBtn = document.getElementById("buyTowelBtn");
   if (buyBtn) {
     var stripeLink = buyBtn.getAttribute("data-stripe-link") || "";
@@ -745,7 +761,7 @@
         })
           .then(function (res) {
             if (res.ok) {
-              if (formStatus) formStatus.textContent = "Thanks — we’ll follow up by email within one business day.";
+              if (formStatus) formStatus.textContent = "Thanks. We’ll follow up by email within one business day.";
               quoteForm.reset();
             } else {
               if (formStatus) formStatus.textContent = "Something went wrong. Please email us directly at beachfrontprintco@gmail.com.";
